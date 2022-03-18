@@ -1073,6 +1073,11 @@ func valForType(v *structpb.Value, t spansql.Type) (interface{}, error) {
 			}
 			return t, nil
 		}
+	case spansql.JSON:
+		sv, ok := v.Kind.(*structpb.Value_StringValue)
+		if ok {
+			return sv.StringValue, nil
+		}
 	}
 	return nil, fmt.Errorf("unsupported inserting value kind %T into column of type %s", v.Kind, t.SQL())
 }

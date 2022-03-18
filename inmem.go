@@ -901,6 +901,8 @@ func spannerTypeFromType(typ spansql.Type) (*spannerpb.Type, error) {
 		code = spannerpb.TypeCode_DATE
 	case spansql.Timestamp:
 		code = spannerpb.TypeCode_TIMESTAMP
+	case spansql.JSON:
+		code = spannerpb.TypeCode_JSON
 	}
 	st := &spannerpb.Type{Code: code}
 	if typ.Array {
