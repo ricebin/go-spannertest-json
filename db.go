@@ -24,6 +24,7 @@ package spannertest
 import (
 	"bytes"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"sort"
 	"strconv"
@@ -1076,6 +1077,11 @@ func valForType(v *structpb.Value, t spansql.Type) (interface{}, error) {
 	case spansql.JSON:
 		sv, ok := v.Kind.(*structpb.Value_StringValue)
 		if ok {
+			var x map[string]interface{}
+			if err := json.Unmarshal([]byte(sv.StringValue), &x); err != nil {
+				return nil, fmt.Errorf("bad JSON %v: %v", sv.StringValue, err)
+
+			}
 			return sv.StringValue, nil
 		}
 	}
