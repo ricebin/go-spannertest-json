@@ -167,6 +167,15 @@ var functions = map[string]function{
 			return x % y, spansql.Type{Base: spansql.Int64}, nil
 		},
 	},
+	"SUM": {
+		Eval: func(values []interface{}, types []spansql.Type) (interface{}, spansql.Type, error) {
+			var sum int64
+			for _, v := range values {
+				sum = sum + v.(int64)
+			}
+			return sum, spansql.Type{Base: spansql.Int64}, nil
+		},
+	},
 }
 
 func cast(values []interface{}, types []spansql.Type, safe bool) (interface{}, spansql.Type, error) {
